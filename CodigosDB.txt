@@ -1,0 +1,37 @@
+***CÓDIGOS BANCO DE DADOS***
+
+-- CRIAR UM DATA-BASE --
+CREATE DATABASE nome-do-data-base;
+
+-- EXCLUIR UMA TABELA --
+DROP DATABASE nome-do-data-base;
+
+-- USAR UMA DATA-BASE --
+USE nome-do-data-base;
+
+-- CRIAR UMA TABELA --
+CREATE TABLE tabela;
+
+-- SELECIONAR TODA UMA TABELA --
+SELECT * FROM tabela;
+
+-- SELECIONAR UMA CAMPO DA TABELA --
+SELECT nome_campo FROM tabela;
+
+-- INSERIR DADOS/VALORES EM UMA TABELA --
+INSERT INTO tabela (nome_campo, nome_campo, nome_campo)
+VALUES ('valor', 'valor', 'valor');
+
+-- ATUALIZAR/ALTERAR UM VALOR DA TABELA --
+UPDATE tabela SET nome_campo_a_alterar = 'valor_alterado'
+WHERE nome_campo_indicacao;
+
+-- ALTERAR UM CAMPO DA TABELA --
+ALTER TABLE tabela
+CHANGE COLUMN nome_campo nome_novo BIGINT NOT NULL;
+
+-- APELIDANDO UMA TABELA --
+* É possivel apelidar uma tabela a qualquer momento em que ela for citada:
+INSERT INTO tabela alias ...
+SELECT tabela alias ...
+UPDATE tabela alias ...

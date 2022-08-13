@@ -1,0 +1,4 @@
+*** QUERIES ***
+
+UPDATE bank_account SET balance = :balance
+WHERE account_number = :acc AND agency = :ag;
