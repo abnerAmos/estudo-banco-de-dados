@@ -15,23 +15,31 @@ CREATE TABLE tabela;
 -- SELECIONAR TODA UMA TABELA --
 SELECT * FROM tabela;
 
--- SELECIONAR UMA CAMPO DA TABELA --
-SELECT nome_campo FROM tabela;
+-- SELECIONAR UM CAMPO DA TABELA --
+SELECT nome_coluna FROM tabela;
 
 -- INSERIR DADOS/VALORES EM UMA TABELA --
-INSERT INTO tabela (nome_campo, nome_campo, nome_campo)
+INSERT INTO tabela (nome_coluna, nome_coluna, nome_coluna)
 VALUES ('valor', 'valor', 'valor');
 
 -- ATUALIZAR/ALTERAR UM VALOR DA TABELA --
-UPDATE tabela SET nome_campo_a_alterar = 'valor_alterado'
-WHERE nome_campo_indicacao;
+UPDATE tabela SET nome_coluna_a_alterar = 'valor_alterado'
+WHERE nome_coluna_referencia = 'valor_referencia';
 
 -- ALTERAR UM CAMPO DA TABELA --
 ALTER TABLE tabela
-CHANGE COLUMN nome_campo nome_novo BIGINT NOT NULL;
+CHANGE COLUMN nome_coluna nome_novo BIGINT NOT NULL;
+
+-- ALTERAR UM CAMPO DA TABELA (valores pre-definidos) --
+ALTER TABLE tabela
+CHANGE COLUMN nome_coluna enum('CPF', 'CNPJ') BIGINT NOT NULL DEFAULT 'PF';
 
 -- APELIDANDO UMA TABELA --
 * É possivel apelidar uma tabela a qualquer momento em que ela for citada:
 INSERT INTO tabela alias ...
 SELECT tabela alias ...
 UPDATE tabela alias ...
+
+-- APELIDANDO UMA COLUNA --
+* É possivel apelidar uma tabela a qualquer momento em que ela for citada:
+SELECT coluna AS alias ...
