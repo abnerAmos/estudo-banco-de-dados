@@ -1,38 +1,53 @@
 ***CÓDIGOS BANCO DE DADOS***
 
+
 -- CRIAR UM DATA-BASE --
 CREATE DATABASE nome-do-data-base;
 
--- EXCLUIR UMA TABELA --
+
+-- EXCLUIR UM DATA-BASE --
 DROP DATABASE nome-do-data-base;
+
 
 -- USAR UMA DATA-BASE --
 USE nome-do-data-base;
 
+
 -- CRIAR UMA TABELA --
 CREATE TABLE tabela;
+
+
+-- EXCLUIR UMA TABELA --
+DROP DATABASE nome-do-data-base;
+
 
 -- SELECIONAR TODA UMA TABELA --
 SELECT * FROM tabela;
 
--- SELECIONAR UM CAMPO DA TABELA --
+
+-- SELECIONAR UM COLUNA DA TABELA --
 SELECT nome_coluna FROM tabela;
+
 
 -- INSERIR DADOS/VALORES EM UMA TABELA --
 INSERT INTO tabela (nome_coluna, nome_coluna, nome_coluna)
 VALUES ('valor', 'valor', 'valor');
 
+
 -- ATUALIZAR/ALTERAR UM VALOR DA TABELA --
 UPDATE tabela SET nome_coluna_a_alterar = 'valor_alterado'
 WHERE nome_coluna_referencia = 'valor_referencia';
 
--- ALTERAR UM CAMPO DA TABELA --
+
+-- ALTERAR UMA COLUNA DA TABELA --
 ALTER TABLE tabela
-CHANGE COLUMN nome_coluna nome_novo BIGINT NOT NULL;
+CHANGE COLUMN nome_coluna nome_novo BIGINT (30) NOT NULL;
+
 
 -- ALTERAR UM CAMPO DA TABELA (valores pre-definidos) --
 ALTER TABLE tabela
 CHANGE COLUMN nome_coluna enum('CPF', 'CNPJ') BIGINT NOT NULL DEFAULT 'PF';
+
 
 -- APELIDANDO UMA TABELA --
 * É possivel apelidar uma tabela a qualquer momento em que ela for citada:
@@ -40,6 +55,74 @@ INSERT INTO tabela alias ...
 SELECT tabela alias ...
 UPDATE tabela alias ...
 
+
 -- APELIDANDO UMA COLUNA --
 * É possivel apelidar uma tabela a qualquer momento em que ela for citada:
 SELECT coluna AS alias ...
+
+
+-- JUNTANDO DUAS TABELAS --
+SELECT nome_coluna FROM tabela alias INNER JOIN tabela2 alias2 ON (alias.coluna = alias2.coluna2)
+WHERE alias.coluna = :nome_referencia AND alias.coluna = :nome_referencia
+* Procura itens/valores interligado a duas tabelas (necessário associar duas colunas que sejam PK e FK)
+
+
+--------------------------------- OPERACOES QUERYS: -----------------------------------------------
+
+-- - PESQUISA EM JUNCAO DE TABELAS:
+
+SELECT *(ou nome_coluna) FROM tabela alias INNER JOIN tabela2 alias2 ON (alias.colunaFK = alias2.colunaFK)
+INNER JOIN tabela alias ON (alias.colunaFK = alias2.colunaFK)
+WHERE alias.coluna = :nome_referencia AND alias2.coluna = :nome_referencia2
+
+-- - <> DIFERENTE:
+
+SELECT *(ou nome_coluna) FROM tabela alias INNER JOIN tabela2 alias2 ON (alias.colunaFK = alias2.colunaFK)
+WHERE alias.coluna = :nome_referencia
+AND		alias.coluna = :nome_referencia
+AND		alias.coluna <> 'TEXTO';
+
+-- - BETWEEN (pesquisa por range de data):
+
+SELECT *(ou nome_coluna) FROM tabela alias INNER JOIN tabela2 alias2 ON (alias.colunaFK = alias2.colunaFK)
+WHERE alias.coluna = :nome_referencia
+AND		alias.coluna = :nome_referencia
+AND		alias.coluna <> 'TEXTO';
+AND		alias.coluna BETWEEN '2020-01-01' AND '2022-12-30';
+
+-- - IN (pesquisa por categoria informada):
+-- - ORDER BY (ordenacao por ascendencia e descendencia ASC / DESC)
+
+SELECT *(ou nome_coluna) FROM tabela alias INNER JOIN tabela2 alias2 ON (alias.colunaFK = alias2.colunaFK)
+WHERE	alias.coluna IN ('TEXTO', 'VALOR')
+ORDER BY alias.coluna ASC;
+
+-- - NOT IN (pesquisa tudo, menos a categoria informada):
+
+SELECT *(ou nome_coluna) FROM tabela alias INNER JOIN tabela2 alias2 ON (alias.colunaFK = alias2.colunaFK)
+WHERE	alias.coluna NOT IN ('TEXTO', 'VALOR')
+
+-- - COUNT (pesquisa tudo, menos a categoria informada):
+
+SELECT COUNT(*) FROM tabela;
+
+-- - LIMIT (limita a quantidade de resultados obtidos):
+-- - OFFSET (pula quantidade de linhas especificadas):
+
+SELECT * FROM tabela alias INNER JOIN tabela alias ON (alias.colunaFK = alias2.colunaFK)
+LIMIT 4 OFFSET 3;
+
+-- - LIKE (pesquisa criterios dentro do texto informado):
+-- % na frente pesquisa textos com criterios especificados na frente
+-- % atrás pesquisa textos com criterios especificados atras
+-- % frente e atrás, pesquisa textos com criterios especificados entre a porcentagem
+
+SELECT * FROM client cl WHERE cl.email LIKE '%.com';
+SELECT * FROM client cl WHERE cl.email LIKE 'r%';
+SELECT * FROM client cl WHERE cl.email LIKE '%na%';
+
+-- - MAIOR > e MENOR < (pesquisa valores maior ou menor que o especificado)
+-- >= ou <= tambem é valido
+
+SELECT * FROM bank_account ba WHERE ba.balance <100;
+SELECT * FROM bank_account ba WHERE ba.balance >100;
