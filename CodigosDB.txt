@@ -49,6 +49,10 @@ ALTER TABLE tabela
 CHANGE COLUMN nome_coluna enum('CPF', 'CNPJ') BIGINT NOT NULL DEFAULT 'PF';
 
 
+-- ADICIONANDO UMA NOVA COLUNA (após determinada coluna) --
+ALTER TABLE tabela ADD COLUMN coluna_nova DATETIME AFTER coluna_existente;
+
+
 -- APELIDANDO UMA TABELA --
 * É possivel apelidar uma tabela a qualquer momento em que ela for citada:
 INSERT INTO tabela alias ...
